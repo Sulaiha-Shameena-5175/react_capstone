@@ -1,7 +1,7 @@
 import logo from './logo.svg';
 import './App.css';
 import { useEffect, useState } from 'react';
-import { Login } from './components/login';
+import  Login  from './components/login';
 import { BrowserRouter, Link, Routes, Route } from 'react-router-dom'
 import { Dashboard } from './components/dashboard';
 function App() {

@@ -2,9 +2,12 @@ from flask import Flask, session, request, make_response, jsonify, redirect, url
 import jwt
 from datetime import datetime, timedelta
 from functools import wraps
+import json
+from flask_cors import CORS, cross_origin
 
 api = Flask(__name__)
 api.config['SECRET_KEY'] = 'e66f9d380e9843b795ca45c5d9e5835c'
+CORS(api)
 
 def token_required(func):
     @wraps(func)
@@ -43,17 +46,22 @@ def auth():
     return 'JWT is verified. Welcome to your dashboard'
 
 @api.route('/login', methods=['POST'])
+@cross_origin()
 def login():
-    if request.form['username'] and request.form['password'] == '1234':
+    print("request", request.data, request.json)
+
+    if request.json['email'] and request.json['password'] == '1234':
         session['logged_in'] = True
         token = jwt.encode({
-            'user' : request.form['username'],
+            'user' : request.json['email'],
             'expiration' : str(datetime.utcnow() + timedelta(seconds=120))
         },api.config['SECRET_KEY'])
         return jsonify({'token': token})
     else:
         return make_response('Unable to verify', 403, { 'WWW-Authenticate': 'Basic realm:"Authentication failed!"' })
 
-@api.route('/dashboard')
+    return "Login success"
+
+@api.route('/dashboard', methods=['POST'])
 def handleDashboard():
     return 'dashboard'
