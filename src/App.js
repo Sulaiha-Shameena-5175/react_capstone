@@ -3,7 +3,7 @@ import './App.css';
 import { useEffect, useState } from 'react';
 import  Login  from './components/login';
 import { BrowserRouter, Link, Routes, Route } from 'react-router-dom'
-import { Dashboard } from './components/dashboard';
+import Dashboard from './components/dashboard';
 function App() {
 
   const [profileData, setProfileData] = useState(null)
@@ -33,7 +33,7 @@ function App() {
     <div className="App">
       <BrowserRouter>
         <Routes>
-          <Route exact path='/login' element={<Login/>} >
+          <Route exact path='/' element={<Login/>} >
           </Route>
           <Route exact path='/dashboard'  element={<Dashboard/>} >
           </Route>
